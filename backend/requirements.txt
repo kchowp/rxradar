@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pandas
+fuzzywuzzy
+python-Levenshtein
+streamlit
