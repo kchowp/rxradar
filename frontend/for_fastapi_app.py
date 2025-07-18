@@ -415,7 +415,7 @@ def main_app_page():
 
     st.markdown("---") 
 
-    # --- Section 2: Analyze Medications (now includes conditional sections) ---
+    # --- Section 2: Analyze Medications (includes conditional sections) ---
     st.header("2. Analyze Medications")
     st.write("Click 'Analyze Medications' to check your current list for potential issues.")
     analyze_button_clicked = st.button("Analyze Medications", key="analyze_button_main", type="primary")
@@ -696,7 +696,7 @@ def main_app_page():
             )
             st.markdown("---") 
         
-        # Add a confirm button
+        
         def confirm_spell_checks():
             for entry in st.session_state.unrecognized_meds_to_correct:
                 med_idx = entry['index']

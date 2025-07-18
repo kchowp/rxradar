@@ -173,8 +173,8 @@ async def analyze_medications(med_input: MedicationInput):
 
 
 # --- To Run This Simplified FastAPI App Locally ---
-# 1. Save this file as `main.py` in your `rxradar_backend` directory.
-# 2. Open your terminal and navigate to the `rxradar_backend` directory.
-# 3. Ensure your virtual environment is active (from previous instructions).
+# 1. Save this file as `main.py` in  `rxradar_backend` directory.
+# 2. Open terminal and navigate to the `rxradar_backend` directory.
+# 3. Ensure virtual environment is active. Ensure requirements.txt is installed there, too. 
 # 4. Run: `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
 #    This will start the backend server. Keep this terminal open.
