@@ -1,0 +1,14 @@
+{
+    "robitussin": [
+        {"display_name": "Robitussin DM (Dextromethorphan, Guaifenesin)", "active_ingredients": ["Dextromethorphan", "Guaifenesin"]},
+        {"display_name": "Robitussin AC (Guaifenesin, Codeine)", "active_ingredients": ["Guaifenesin", "Codeine"]},
+        {"display_name": "Robitussin CF (Dextromethorphan, Guaifenesin, Pseudoephedrine)", "active_ingredients": ["Dextromethorphan", "Guaifenesin", "Pseudoephedrine"]}
+    ],
+    "tylenol": [
+        {"display_name": "Tylenol (Acetaminophen)", "active_ingredients": ["Acetaminophen"]},
+        {"display_name": "Tylenol PM (Acetaminophen, Diphenhydramine)", "active_ingredients": ["Acetaminophen", "Diphenhydramine"]}
+    ],
+    "advil": [
+        {"display_name": "Advil (Ibuprofen)", "active_ingredients": ["Ibuprofen"]}
+    ]
+}

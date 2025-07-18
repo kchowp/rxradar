@@ -197,6 +197,8 @@ if 'login_error_message' not in st.session_state: # To store login errors
     st.session_state.login_error_message = ""
 if 'user_id' not in st.session_state: # Store user_id after login
     st.session_state.user_id = None
+if 'login_success_message' not in st.session_state: # New: To store login success messages
+    st.session_state.login_success_message = ""
 
 # --- Flags to trigger reruns outside of callbacks ---
 if 'login_redirect_needed' not in st.session_state:
@@ -232,6 +234,7 @@ def login_page():
     # Login Function
     def do_login():
         st.session_state.login_error_message = "" # Clear previous error at the start of function
+        st.session_state.login_success_message = "" # Clear previous success message
         if not st.session_state.login_username or not st.session_state.login_password:
             st.session_state.login_error_message = "Please enter both username and password."
             return
@@ -293,7 +296,7 @@ def login_page():
                 json={"username": st.session_state.login_username, "password": st.session_state.login_password}
             )
             if response.status_code == 200:
-                st.success("Account created successfully! Please log in.")
+                st.session_state.login_success_message = "Account created successfully! Please log in."
             else:
                 st.session_state.login_error_message = f"Registration failed: {response.json().get('detail', 'Username might already exist or other error')}"
         except requests.exceptions.ConnectionError:
@@ -310,6 +313,9 @@ def login_page():
     # Display error message at the bottom of the login section
     if st.session_state.login_error_message:
         st.error(st.session_state.login_error_message)
+    # Display success message at the bottom of the login section
+    if st.session_state.login_success_message:
+        st.success(st.session_state.login_success_message)
     
     # --- RERUN LOGIC FOR LOGIN PAGE (OUTSIDE CALLBACKS) ---
     if st.session_state.login_redirect_needed:
