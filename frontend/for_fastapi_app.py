@@ -82,7 +82,7 @@ st.markdown("""
     .stSelectbox div[role="listbox"] div[data-baseweb="select"] ul li span {
         line-height: 1.5 !important; /* Crucial for descenders */
         color: black !important; /* Ensure text is visible */
-        overflow: visible !important; /* Ensure content is not hidden */
+        overflow: visible !important;
         height: auto !important; /* Allow height to adjust to content */
     }
 
@@ -195,10 +195,10 @@ if 'current_analysis_state' not in st.session_state: # New state variable for co
     st.session_state.current_analysis_state = "initial"
 if 'login_error_message' not in st.session_state: # To store login errors
     st.session_state.login_error_message = ""
-if 'user_id' not in st.session_state: # Store user_id after login
-    st.session_state.user_id = None
 if 'login_success_message' not in st.session_state: # New: To store login success messages
     st.session_state.login_success_message = ""
+if 'user_id' not in st.session_state: # Store user_id after login
+    st.session_state.user_id = None
 
 # --- Flags to trigger reruns outside of callbacks ---
 if 'login_redirect_needed' not in st.session_state:
@@ -217,8 +217,9 @@ def login_page():
     st.markdown("""
         <div style="background-color: #e0f7fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
             <h3>About</h3>
-            <p><strong>App Purpose:</strong> RxRadar helps you safely manage your medications by flagging potential issues like drug interactions, duplicates, and missing information. Our goal is to empower you with clear, plain-language insights for better health discussions with your doctor.</p>
-            <p><strong>Disclaimer:</strong> RxRadar does not provide medical advice. Consult a healthcare professional for all medication decisions.</p>
+            <p><strong>App Purpose:</strong> RxRadar helps you safely manage your medications by flagging potential issues like drug interactions, duplicates, and missing information. Our goal is to empower you with clear, plain-language insights for better health discussions with your doctor. RxRadar does not provide medical advice. Consult with your healthcare professional for all medication decisions.</p>
+            <p><strong>Disclaimer:</strong> This is an MVP version of RxRadar meant for demo purposes only. It is still in Beta and is not fully released with proper securities and encryptions. As such, please <strong>do not input any identifiable/sensitive personal or medical information</strong>. </p>
+            <p><strong>Disclaimer Again:</strong><strong> DO NOT PUT ANY IDENTIFIABLE/SENSITIVE PERSONAL OR MEDICAL INFORMATION INTO RXRADAR AT THIS TIME!</strong></p> 
         </div>
     """, unsafe_allow_html=True)
 
@@ -283,6 +284,7 @@ def login_page():
     # Register Function
     def do_register():
         st.session_state.login_error_message = "" # Clear previous error at the start of function
+        st.session_state.login_success_message = "" # Clear previous success message
         if not st.session_state.login_username or not st.session_state.login_password:
             st.session_state.login_error_message = "Please enter both username and password."
             return
@@ -379,10 +381,24 @@ def main_app_page():
         st.session_state.current_analysis_state = "initial" # Reset state to initial
 
 
+    # Function to delete a medication row
+    def delete_medication_row(index_to_delete):
+        if len(st.session_state.medications) > 1: # Ensure at least one row remains
+            st.session_state.medications.pop(index_to_delete)
+            # Reset analysis state as deleting a medication might change pending issues
+            st.session_state.unrecognized_meds_to_correct = []
+            st.session_state.meds_to_disambiguate = []
+            st.session_state.current_analysis_state = "initial"
+            st.session_state.analysis_rerun_needed = True # Trigger rerun outside callback
+        else:
+            st.warning("You must have at least one medication row.")
+
+
     # Display dynamic medication input fields
     for i, med in enumerate(st.session_state.medications):
         st.subheader(f"Medication {i+1}")
-        cols = st.columns(3)
+        # Use columns to align the text input and the delete button
+        cols = st.columns([0.4, 0.3, 0.2, 0.1]) # Adjust column widths as needed
         
         with cols[0]:
             # Display current name, which might be the original input or a corrected/disambiguated one
@@ -404,6 +420,18 @@ def main_app_page():
                 value=st.session_state.medications[i]['frequency'],
                 key=f"med_frequency_{i}"
             )
+        
+        with cols[3]:
+            # Add a delete button for each row, only if there's more than one row
+            if len(st.session_state.medications) > 1:
+                st.markdown("<div style='height: 2.8em;'></div>", unsafe_allow_html=True) # Spacer for alignment
+                st.button(
+                    "X",
+                    key=f"delete_med_{i}",
+                    on_click=delete_medication_row,
+                    args=(i,), # Pass the index of the current medication to the callback
+                    help="Delete this medication row"
+                )
 
     st.button("Add Another Medication", on_click=add_medication_row)
 
@@ -543,30 +571,29 @@ def main_app_page():
                     # 3. If still pending (not resolved by brand or generic), perform spell check
                     # This block now only executes if the medication hasn't been resolved by the above checks.
                     suggestions = difflib.get_close_matches(typed_name_lower, ALL_KNOWN_NAMES_FOR_SPELLCHECK, n=5, cutoff=0.6)
+                    
+                    # Always add to unrecognized_meds_to_correct if not resolved by direct match/disambiguation
+                    # And set needs_spell_check to True to ensure the section is displayed.
                     if suggestions:
-                        # Add a 'selected_correction' field to track user's choice for this specific entry
                         st.session_state.unrecognized_meds_to_correct.append({
                             'index': i,
                             'original_name': typed_name_raw,
                             'suggestions': suggestions, # Store raw suggestions for the selectbox
                             'selected_correction': typed_name_raw # Default to original until user selects
                         })
-                        st.session_state.medications[i]['status'] = "needs_spell_check"
-                        needs_spell_check = True
                     else: # Truly unknown, no suggestions
-                        st.session_state.medications[i]['active_ingredients'] = ["UNKNOWN"]
-                        st.session_state.medications[i]['status'] = "resolved" # Mark as resolved to not re-process
-                        # Still add to unrecognized for user awareness, but it won't be a dropdown
                         st.session_state.unrecognized_meds_to_correct.append({
                             'index': i,
                             'original_name': typed_name_raw,
-                            'suggestions': ["No suggestions found (please verify)"],
+                            'suggestions': ["Unrecognized medication spelling. Please check and retype this medication."],
                             'selected_correction': typed_name_raw # Default to original
                         })
-                        # This specific case doesn't block analysis, but user should see it.
+                    st.session_state.medications[i]['status'] = "needs_spell_check" # Mark as needing spell check
+                    needs_spell_check = True
 
 
                 # Determine next state based on what was found in this pass
+                # Prioritize disambiguation over spell-checking
                 if needs_disambiguation:
                     st.session_state.current_analysis_state = "disambiguating"
                 elif needs_spell_check:
@@ -594,7 +621,7 @@ def main_app_page():
     # --- Display Disambiguation Section (Conditional) ---
     if st.session_state.current_analysis_state == "disambiguating":
         st.markdown("---")
-        st.subheader("Medication Clarification (Active Ingredient)")
+        st.subheader("Medication Clarification (Active Ingredients)")
         st.error("Some brand names have multiple versions. Please select the correct formulation/active ingredient(s) for the following:")
 
         def update_single_disambiguation_in_state(disambiguation_entry_idx):
@@ -675,12 +702,18 @@ def main_app_page():
         for unrecognized_entry_idx, entry in enumerate(st.session_state.unrecognized_meds_to_correct):
             med_index = entry['index']
             original_input_name = entry['original_name']
-            suggestions = [original_input_name] + sorted(entry['suggestions']) # Add original to suggestions
+            
+            # Options for the selectbox: original input + suggestions.
+            # If "Unrecognized medication spelling..." is the only suggestion, it means no actual suggestions were found.
+            if entry['suggestions'] == ["Unrecognized medication spelling. Please check and retype this medication."]:
+                options = entry['suggestions'] # Only the custom message
+            else:
+                options = [original_input_name] + sorted(entry['suggestions']) # Add original and sorted suggestions
 
             # Determine default index based on current 'selected_correction'
             current_selected = entry.get('selected_correction', original_input_name)
             try:
-                default_index = suggestions.index(current_selected)
+                default_index = options.index(current_selected)
             except ValueError:
                 default_index = 0 # Fallback if current_selected isn't in options
 
@@ -688,7 +721,7 @@ def main_app_page():
             
             st.selectbox(
                 f"Select correction for '{original_input_name}':",
-                options=suggestions,
+                options=options,
                 index=default_index,
                 key=f"correction_select_{unrecognized_entry_idx}", # Use unrecognized_entry_idx for unique key
                 on_change=update_single_correction_in_state,
@@ -702,6 +735,13 @@ def main_app_page():
                 med_idx = entry['index']
                 selected_name = entry['selected_correction']
                 typed_name_lower = selected_name.strip().lower()
+
+                # If the user selected the "Unrecognized..." message, keep the original input
+                if selected_name == "Unrecognized medication spelling. Please check and retype this medication.":
+                    st.session_state.medications[med_idx]['name'] = entry['original_name'] # Keep original input
+                    st.session_state.medications[med_idx]['active_ingredients'] = [] # Clear active ingredients
+                    st.session_state.medications[med_idx]['status'] = "pending" # Keep status as pending to re-prompt
+                    continue # Move to the next entry
 
                 st.session_state.medications[med_idx]['name'] = selected_name
                 st.session_state.medications[med_idx]['active_ingredients'] = [] # Reset for re-determination
@@ -757,7 +797,7 @@ def main_app_page():
                 # If still not resolved after all checks (should only happen if selected_name is truly unknown)
                 if not resolved_this_med:
                     st.session_state.medications[med_idx]['active_ingredients'] = ["UNKNOWN"]
-                    st.session_state.medications[med_idx]['status'] = "resolved" # Mark as resolved to avoid re-looping
+                    st.session_state.medications[med_idx]['status'] = "pending" # Keep as pending for re-evaluation
 
             st.session_state.unrecognized_meds_to_correct = [] # Clear the list after confirming
 
