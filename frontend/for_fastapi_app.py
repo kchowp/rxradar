@@ -104,22 +104,14 @@ BACKEND_URL = "http://localhost:8000"
 # --- Helper Functions ---
 def display_alert_card(alert_data):
     """Displays a single alert with icons and plain language."""
-    drugs = ", ".join(alert_data.get("drugs_involved", []))
-    message = alert_data.get("alert_message", "No specific message provided.")
-    alert_type = alert_data.get("alert_type", "Interaction") # Default to Interaction for icons
-
-    # Simple icon mapping based on common alert types
+    drugs_capitalized = [drug.title() for drug in alert_data.get("drugs_involved", [])]
+    drugs = ", ".join(drugs_capitalized)
+    message = alert_data.get("alert_message", "No specific information.")
     icon_char = "⚠️"
-    if alert_type == "Interaction":
-        icon_char = "🚨"
-    elif alert_type == "Duplicate":
-        icon_char = "2️⃣"
-    elif alert_type == "No Issue": # Added for explicit "No Issue" icon
-        icon_char = "✅"
 
     st.markdown(f"""
         <div style="background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
-            <h4>{icon_char} {alert_type} Alert: {drugs}</h4>
+            <h4>{icon_char} Alert: {drugs}</h4>
             <p>{message}</p>
         </div>
     """, unsafe_allow_html=True)
