@@ -237,7 +237,6 @@ async def analyze_medications(med_input: MedicationInput):
     #         alert_message="No significant drug-drug interactions or duplicates detected for the provided medications."
     #     ).dict())
 
-    return {"alerts": simulated_alerts}
 
 
 # --- To Run This Simplified FastAPI App Locally ---
