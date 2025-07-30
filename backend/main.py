@@ -158,7 +158,7 @@ async def analyze_medications(med_input: MedicationInput):
         ]
         alerts.append(AlertOutput(
                 drugs_involved=list(set(meds_with_dup)),
-                alert_message=f"You have entered medications with the same active ingredient:'{dupe[0]}'. Please review your medications to avoid potential overdosing, dangerous side effects, and/or uncessary medication."
+                alert_message=f"You have entered medications with the same active ingredient:'{dupe[0].title()}'. Please review your medications to avoid potential overdosing, dangerous side effects, and/or unecessary medication."
             ).dict()) # .dict() to convert Pydantic model to dict
 
     # Now handle alerts for interaction pairs
