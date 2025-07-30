@@ -107,7 +107,7 @@ def display_alert_card(alert_data):
     drugs_capitalized = [drug.title() for drug in alert_data.get("drugs_involved", [])]
     drugs = ", ".join(drugs_capitalized)
     message = alert_data.get("alert_message", "No specific information.")
-    icon_char = "⚠️"
+    icon_char = "🚨"
 
     st.markdown(f"""
         <div style="background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
@@ -395,7 +395,7 @@ def main_app_page():
         with cols[0]:
             # Display current name, which might be the original input or a corrected/disambiguated one
             st.session_state.medications[i]['name'] = st.text_input(
-                "Name (e.g., Metformin, Tylenol, Zyrtec)",
+                "Name (e.g., Metformin, Advil, Zyrtec)",
                 value=st.session_state.medications[i]['name'],
                 key=f"med_name_input_{i}"
             )
