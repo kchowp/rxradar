@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxRadar: AI-Powered Medication Management</title>
+    <style>
+        /* A simple, clean style for readability. You can customize this later. */
+        body { font-family: sans-serif; line-height: 1.6; margin: 0; padding: 0; color: #333; }
+        .banner {
+            background: linear-gradient(to right, #439ec2, #63bd63); /* Light Blue to Mint Green */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+        }
+        .banner h1 {
+            font-size: 3em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-top: 0;
+        }
+        .banner p {
+            font-size: 1.2em;
+            opacity: 0.8;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .content-section { margin-bottom: 30px; }
+        .content-section h2 { text-align: center; }
+        .content-section p, .content-section ul, .content-section h3 { margin-top: 10px; }
+        .video-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .video-container iframe { width: 100%; max-width: 400px; height: 250px; border: none; }
+        .cta-button { display: inline-block; background-color: #3498db; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-top: 15px; }
+        .cta-button:hover { background-color: #2980b9; }
+        .team-member { list-style-type: none; margin-bottom: 10px; }
+        footer { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #ccc; }
+        ul { padding-left: 20px; }
+        ul li { margin-bottom: 8px; }
+        .team-photo-container { 
+            text-align: center; /* This rule centers the image within its container */
+            margin: 20px 0; 
+        }
+        .team-photo { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <h1>RxRadar</h1>
+        <p>AI-Powered Medication Management for Detecting Duplicates and Interactions</p>
+        <a href="http://54.91.98.248:8501/" class="cta-button" target="_blank" rel="noopener noreferrer">Try our MVP!</a>
+
+    </div>
+
+    <div class="content-container">
+
+        <section id="problem" class="content-section">
+            <h2>The Problem</h2>
+            <p>
+                The modern healthcare ecosystem is fragmented, with patients' medical information often stored across multiple providers and disconnected electronic health record systems. This makes it nearly impossible for any single provider to have a complete, "360-degree understanding" of a patient's full health history and medication regimen. 
+            </p>
+            <p>
+                This problem is particularly dangerous for senior patients and their caregivers. Seniors often see a variety of specialists, making safe management of prescriptions a complex web of challenges.
+            </p>
+            <ul>
+                <li><strong>34% of older adults take 5 or more medications daily.</strong></li>
+                <li><strong>25% see at least 5 different doctors a year.</strong></li>
+                <li><strong>Older adults are 4 to 7 times more likely to be hospitalized due to medication-related issues.</strong></li>
+            </ul>
+            <p>
+                Senior patients are at a higher risk of taking medications with <strong>duplicate active ingredients</strong> or experiencing dangerous <strong>drug-drug interactions</strong>, highlighting the urgent need for a solution.
+            </p>
+        </section>
+
+        <section id="overview" class="content-section">
+            <h2>What does RxRadar do?</h2>
+            <p>
+                RxRadar is a <strong>smart medication management platform</strong> designed to bring clarity and safety to your health routine. By simply entering your medication list, RxRadar instantly analyzes your regimen to identify potential drug-drug interactions and highlight any duplicate active ingredients. Our easy-to-understand alerts and detailed explanations empower you with the knowledge you need to take control of your health with confidence.
+            </p>
+        </section>
+
+        <section id="value" class="content-section">
+            <h2>Value Proposition and Potential Impact</h2>
+            <p>
+                RxRadar's value extends from individual patient safety to broader public health and financial impact. Our platform provides a proactive solution to a systemic problem, offering significant benefits:
+            </p>
+
+            <h3>Public Health Impact</h3>
+            <ul>
+                <li>Up to <strong>50% of adverse drug events are preventable</strong>.</li>
+                <li>RxRadar helps reduce the <strong>3.5 million doctor visits, 1 million ER visits, and 125,000 hospital admissions</strong> that occur annually due to medication-related issues.</li>
+            </ul>
+
+            <h3>Patient-Specific Benefits</h3>
+            <ul>
+                <li><strong>87% of geriatric patients</strong> have been found to have duplicate medications, a risk our platform immediately flags.</li>
+                <li>We help prevent some of the <strong>5% of senior hospitalizations  caused by drug-drug interactions.</strong>.</li>
+            </ul>
+
+            <h3>Financial & Operational Savings</h3>
+            <ul>
+                <li>By preventing preventable medical events, we help reduce the <strong>over $8 billion in medical expenses annually</strong> attributed to medication-related issues.</li>
+                <li>Our solution eases the strain on the healthcare system by <strong>preventing unnecessary doctor visits, hospitalizations, and associated lab work.</strong></li>
+            </ul>
+        </section>
+
+        <section id="technical-details" class="content-section">
+            <h2>Technical Details</h2>
+            <p>
+                For those interested in the underlying technology, you can explore our project's codebase, data analysis notebooks, and documentation.
+            </p>
+            <p style="text-align: center;">
+                <a href="https://github.com/kchowp/rxradar" class="cta-button" target="_blank"rel="noopener noreferrer">View on GitHub</a>
+            </p>
+        </section>
+        
+        <section id="demo" class="content-section">
+            <h2>Product Demo</h2>
+            <p>
+                See RxRadar in action! Watch our brief videos to learn how to use the app, understand its core features, and see firsthand how it can simplify medication management.
+            </p>
+            <div class="video-container">
+                <iframe src="[Link to MVP Demo Video 1 (YouTube embed URL)]" allowfullscreen></iframe>
+                <iframe src="[Link to MVP Demo Video 2 (YouTube embed URL)]" allowfullscreen></iframe>
+            </div>
+        </section>
+        
+        <section id="team" class="content-section">
+            <h2>Team</h2>
+            <div class="team-photo-container">
+                <img src="RxRadar Our Team.jpg" alt="The RxRadar development team." class="team-photo">
+            </div>
+            <h2>Acknowledgements and Special Thanks</h2>
+            <ul>
+                <li class="team-member"><strong>Capstone Advisors:</strong> Korin Reid and Joyce Shen</li>
+                <li class="team-member"><strong>TAs:</strong> Billy Fong</li>
+                <li class="team-member"><strong>Primary Care Physician:</strong> Shih-Fen Chow, MD</li>
+                <li class="team-member"><strong>Pharmacist:</strong></li>
+                <li class="team-member"><strong>Target Users Interviewed:</strong> Friends and Family of Our Team</li>
+                <li class="team-member"><strong>Additional Technical Support & Feedback:</strong> Mohamed Bakr</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="content-section" style="text-align: center;">
+            <h2>Contact Us</h2>
+            <p>
+                Does this resonate with you? Have you ever seen this problem yourself?
+                <br>
+                Reach out to us with questions, feedback, or just to share your experience! We'd love to hear from you.
+            </p>
+            <p>
+                <strong>Email:</strong> <a href="mailto:kchow2020@berkeley.edu" class="contact-link">kchow2020@berkeley.edu</a><br>
+                <strong>Phone:</strong> <a href="tel:+19083378242" class="contact-link">(908) 337-8242</a>
+            </p>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 RxRadar Project. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+</body>
+</html>
