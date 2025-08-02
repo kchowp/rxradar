@@ -112,6 +112,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+#Prod URL 
+BACKEND_URL = "REDACTED" 
 
 def display_alert_card(alert_data):
     """Displays a single alert with icons and plain language."""
