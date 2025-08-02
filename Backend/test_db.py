@@ -26,7 +26,6 @@ def run_test():
     for i in range(10): # Try for 10 seconds
         try:
             engine = create_engine(db_url)
-            # The 'connect()' method will raise an error if the DB is not ready
             connection = engine.connect() 
             print("--> Connection Successful!")
             break
@@ -37,17 +36,16 @@ def run_test():
         print("--> FAILED: Could not connect to the database after 10 seconds.")
         return
 
-    # Now, create the tables
+    # Create the tables
     try:
         print("Attempting to create all tables...")
-        # This line tells SQLAlchemy to create all tables that inherit from Base
         Base.metadata.create_all(bind=engine)
         print("--> Table creation command executed successfully.")
     except Exception as e:
         print(f"--> FAILED: An error occurred during table creation: {e}")
         return
 
-    # Finally, verify that the tables were actually created
+    # Verify that the tables were actually created
     try:
         inspector = inspect(engine)
         tables = inspector.get_table_names()
