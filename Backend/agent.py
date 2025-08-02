@@ -5,7 +5,6 @@ from functools import lru_cache
 from fuzzywuzzy import process
 import asyncio
 
-# ✅ Load Gemini API Key from environment
 API_KEYS = os.getenv("GEMINI_API_KEY","").split(",")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
