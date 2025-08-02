@@ -4,7 +4,7 @@ import time
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.exc import OperationalError
 
-# We need to import the Base from your models file
+# We need to import the Base from models file
 from db import Base 
 import Backend.models as models # Make sure all models are imported so Base knows about them
 
