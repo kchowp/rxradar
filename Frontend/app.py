@@ -61,12 +61,10 @@ st.markdown("""
     .stSpinner {
         font-size: 1.1em;
     }
-    /* Adjust button text size */
     .stButton > button {
         font-size: 1.1em !important;
     }
 
-    /* --- Consistent Styling for Text Inputs and Selectboxes --- */
     /* Target the input fields and text areas directly */
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea {
@@ -97,7 +95,6 @@ st.markdown("""
         overflow: visible !important; /* Ensure content is not hidden */
     }
 
-    /* Target the span element within the list item (where the text actually resides) */
     .stSelectbox div[role="listbox"] div[data-baseweb="select"] ul li span {
         line-height: 1.5 !important; /* Crucial for descenders */
         color: black !important; /* Ensure text is visible */
@@ -105,7 +102,6 @@ st.markdown("""
         height: auto !important; /* Allow height to adjust to content */
     }
 
-    /* Additional targeting for the actual text content within the selectbox options (more specific BaseWeb classes) */
     .stSelectbox .css-1dbjc4n.e1tzin5v0 > div > div > div,
     .stSelectbox .css-1dbjc4n.e1tzin5v0 > div > div > div > span {
         line-height: 1.5 !important;
@@ -116,11 +112,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-# Define backend URL (for local development)
-#BACKEND_URL = "http://backend:8000"
-#Prod URL 
-BACKEND_URL = "FILL IN WITH BACKEND URL" 
 
 def display_alert_card(alert_data):
     """Displays a single alert with icons and plain language."""
