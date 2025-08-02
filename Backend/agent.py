@@ -102,7 +102,7 @@ def analyze_interaction(drug1: str, drug2: str) -> str:
     drug1_clean = drug1.strip().lower()
     drug2_clean = drug2.strip().lower()
 
-    # Build your plain-language context
+    # Build plain-language context
     context = generate_geriatric_alert(f"{drug1_clean}, {drug2_clean}")
 
     # Compose the new prompt
