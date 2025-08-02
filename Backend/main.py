@@ -25,7 +25,7 @@ class MedicationData(BaseModel):
     dosage: str
     frequency: str
     active_ingredients: List[str] = []
-class AlertOutput(BaseModel): # Model for simulated alerts
+class AlertOutput(BaseModel): 
     drugs_involved: List[str]
     alert_message: str
 
