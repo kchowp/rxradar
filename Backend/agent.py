@@ -8,7 +8,7 @@ import asyncio
 API_KEYS = os.getenv("GEMINI_API_KEY","").split(",")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_DIR = BASE_DIR  # Your CSVs are in the project root
+PROJECT_DIR = BASE_DIR  # CSVs are in the project root
 
 alt_names_df = pd.read_csv(os.path.join(PROJECT_DIR, "rxradar_alternate_drug_names.csv"))
 baseline_df = pd.read_csv(os.path.join(PROJECT_DIR, "baseline_model_data.csv"))
@@ -26,7 +26,7 @@ def suggest_closest_drug_name(name: str, threshold=80) -> str:
     match, score = process.extractOne(name, known_drug_names)
     return match if score >= threshold else None
 
-# ---- NEW FUNCTION ----
+
 def generate_geriatric_alert(drugs: str) -> str:
     """
     Takes a comma-separated string with two drug names, returns a plain-language alert.
@@ -97,7 +97,6 @@ def generate_geriatric_alert(drugs: str) -> str:
     alert_lines.append("\n👩‍⚕️ Please consult your doctor or pharmacist before taking these medications together.")
 
     return "\n".join(alert_lines)
-# -----------------------
 
 def analyze_interaction(drug1: str, drug2: str) -> str:
     drug1_clean = drug1.strip().lower()
